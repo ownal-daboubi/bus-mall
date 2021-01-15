@@ -9,8 +9,11 @@ var leftProductText = document.getElementById('left_product_h2');
 var centerProductText = document.getElementById('center_product_h2');
 var rightProductText = document.getElementById('right_product_h2');
 var clicksLeft = 25;
+
 var productCanvas = document.getElementById('productChart').getContext('2d');
 var productCanvas2 = document.getElementById('productChart2').getContext('2d');
+
+var clearDataBtn = document.getElementById('clearLocalStorage');
 
 var shownImages = []; // this array will be responsible  for keeping track of the shown img at the current loop
 
@@ -21,7 +24,35 @@ function Product(name) {
     this.timesShown = 0;
     this.timesClicked = 0;
     arrayOfProduct.push(this);
+
 }
+//functions regarding storing the data
+function storeData() {
+
+    localStorage.setItem('buttom_section', JSON.stringify(arrayOfProduct));
+    console.log(localStorage);
+}
+function clearLocalStorage() {
+
+    localStorage.clear();
+
+    // arrayOfProduct = [];
+
+
+}
+
+function checkAndRestore() {
+
+    if (localStorage.length > 0) { // check if the local storage has any values in it
+        arrayOfProduct = JSON.parse(localStorage.getItem('buttom_section')); // restore the data from the local storage
+
+    }
+}
+
+clearDataBtn.addEventListener('click', clearLocalStorage);
+
+
+
 // creating the objects
 function generateObjects() {
     for (var i = 0; i < arrayOfImages.length; i++) {
@@ -29,6 +60,7 @@ function generateObjects() {
     }
 }
 generateObjects();
+checkAndRestore();
 
 // Functions
 //function that ensure the images currently displayed are not the same as the next images to be displayed
@@ -83,6 +115,7 @@ function renderImg(leftImg, centerImg, rightImg) {
     arrayOfProduct[leftImg].timesShown++;
     arrayOfProduct[centerImg].timesShown++;
     arrayOfProduct[rightImg].timesShown++;
+    storeData();
 
 }
 console.log(arrayOfProduct);
@@ -117,10 +150,12 @@ function checkProduct(objectIndicator) {
         if (arrayOfProduct[index].imgFilePath === objectIndicator) {
             arrayOfProduct[index].timesClicked++;
             clicksLeft--;
+            storeData();
         }
+
     }
 
-    console.log("You have " + clicksLeft + " Clicks left");
+    //console.log("You have " + clicksLeft + " Clicks left");
     if (clicksLeft === 0) {
         renderChart();
         renderChart2();

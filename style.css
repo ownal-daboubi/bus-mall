@@ -1,0 +1,38 @@
+*{
+    box-sizing: border-box;
+}
+  
+body {
+    background-color: #18ad3155;
+  
+}
+main{
+    max-width: 900px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+  
+main > *{
+    float:left;
+}
+
+
+  aside{ 
+    padding-left: 30px;
+  }
+  
+ img {
+    max-height: 300px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+  section div {
+    padding: 7px;
+    box-sizing: border-box;
+    float: left;
+    width: 33%;
+ }
+ main{
+     text-align: center;
+ }
